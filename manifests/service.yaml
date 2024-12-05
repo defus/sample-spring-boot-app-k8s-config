@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-spring-boot-app-k8s
+  labels:
+    app: sample-spring-boot-app-k8s
+    backstage.io/kubernetes-id: sample-spring-boot-app-k8s
+spec:
+  type: ClusterIP
+  selector:
+    app: sample-spring-boot-app-k8s
+  ports:
+    - port: 8080
+      protocol: TCP
+      name: http
