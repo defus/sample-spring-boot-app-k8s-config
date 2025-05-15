@@ -1,1 +1,25 @@
-YXBpVmVyc2lvbjogYXJnb3Byb2ouaW8vdjFhbHBoYTENCmtpbmQ6IEFwcGxpY2F0aW9uDQptZXRhZGF0YToNCiAgbmFtZTogInNhbXBsZS1zcHJpbmctYm9vdC1hcHAtazhzIg0Kc3BlYzoNCiAgcHJvamVjdDogZGVmYXVsdA0KICBzb3VyY2U6DQogICAgcGF0aDogbWFuaWZlc3RzDQogICAgcmVwb1VSTDogDQogICAgdGFyZ2V0UmV2aXNpb246IEhFQUQNCiAgZGVzdGluYXRpb246DQogICAgc2VydmVyOiBodHRwczovL2t1YmVybmV0ZXMuZGVmYXVsdC5zdmMNCiAgICBuYW1lc3BhY2U6IA0KICBzeW5jUG9saWN5Og0KICAgIGF1dG9tYXRlZDoNCiAgICAgIHBydW5lOiB0cnVlDQogICAgICBzZWxmSGVhbDogdHJ1ZQ0KICAgIHN5bmNPcHRpb25zOg0KICAgICAgLSBSZXNwZWN0SWdub3JlRGlmZmVyZW5jZXM9dHJ1ZQ0KICAgICAgLSBBcHBseU91dE9mU3luY09ubHk9dHJ1ZQ0KICAgIHJldHJ5Og0KICAgICAgYmFja29mZjoNCiAgICAgICAgZHVyYXRpb246IDVzDQogICAgICAgIGZhY3RvcjogMg0KICAgICAgICBtYXhEdXJhdGlvbjogMTBt
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "sample-spring-boot-app-k8s"
+spec:
+  project: default
+  source:
+    path: manifests
+    repoURL: 
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: 
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - RespectIgnoreDifferences=true
+      - ApplyOutOfSyncOnly=true
+    retry:
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 10m
